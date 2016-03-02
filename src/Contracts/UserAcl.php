@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CodeEdu\Acl\Contracts;
+namespace Cerberus\Acl\Contracts;
 
 interface UserAcl
 {

@@ -1,16 +1,16 @@
 {
-    "name": "wesleywillians/acl",
+    "name": "cerberus/acl",
     "license": "MIT",
     "authors": [
         {
-            "name": "Wesley Willians",
-            "email": "wesleywillians@gmail.com"
+            "name": "Rodrigo Carneiro",
+            "email": "rodrigo_carneiro@ymail.com"
         }
     ],
     "require": {},
     "autoload": {
         "psr-4": {
-            "CodeEdu\\Acl\\": "src/"
+            "Cerberus\\Acl\\": "src/"
         }
     }
 }

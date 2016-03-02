@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace CodeEdu\Acl;
+namespace Cerberus\Acl;
 
 
-use CodeEdu\Acl\Contracts\UserAcl;
-use CodeEdu\Acl\Entities\Resource;
-use CodeEdu\Acl\Entities\Role;
+use Cerberus\Acl\Contracts\UserAcl;
+use Cerberus\Acl\Entities\Resource;
+use Cerberus\Acl\Entities\Role;
 
 class Acl
 {

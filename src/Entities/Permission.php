@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CodeEdu\Acl\Entities;
+namespace Cerberus\Acl\Entities;
 
 
 class Permission
