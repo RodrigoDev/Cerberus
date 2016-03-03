@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Cerberus\Acl;
 
-
 use Cerberus\Acl\Contracts\UserAcl;
 use Cerberus\Acl\Entities\Resource;
 use Cerberus\Acl\Entities\Role;
