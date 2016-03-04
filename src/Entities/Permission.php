@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cerberus\Acl\Entities;
+namespace Cerberus\Entities;
 
 
 class Permission

@@ -2,14 +2,14 @@
 
 namespace Cerberus\Acl\Contracts\Tests;
 
-use Cerberus\Acl\Acl;
+use Cerberus\Acl;
 
-class TestCerberus extends \PHPUnit_Framework_TestCase
+class TestAcl extends \PHPUnit_Framework_TestCase
 {
     public function testStub()
     {
         // Cria um esboço para a classe Acl.
-        $acl = $this->getMockBuilder('Cerberus\Acl\Acl')
+        $acl = $this->getMockBuilder('Cerberus\Acl')
                     ->disableOriginalConstructor()
                     ->getMock();
 

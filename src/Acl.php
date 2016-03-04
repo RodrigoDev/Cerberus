@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Cerberus\Acl;
+namespace Cerberus;
 
-use Cerberus\Acl\Contracts\UserAcl;
-use Cerberus\Acl\Entities\Resource;
-use Cerberus\Acl\Entities\Role;
+use Cerberus\Contracts\UserAcl;
+use Cerberus\Entities\Resource;
+use Cerberus\Entities\Role;
 
 class Acl
 {
