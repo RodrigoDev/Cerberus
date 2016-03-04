@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Cerberus\Contracts;
 
 interface UserAcl

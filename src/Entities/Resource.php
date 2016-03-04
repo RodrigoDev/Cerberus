@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
+
+declare (strict_types = 1);
 
 namespace Cerberus\Entities;
-
 
 class Resource
 {
@@ -25,11 +25,13 @@ class Resource
 
     /**
      * @param string $name
-     * @return Resource
+     *
+     * @return resource
      */
     public function setName(string $name):Resource
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -43,11 +45,13 @@ class Resource
 
     /**
      * @param string $ownerField
-     * @return Resource
+     *
+     * @return resource
      */
     public function setOwnerField(string $ownerField): Resource
     {
         $this->ownerField = $ownerField;
+
         return $this;
     }
 }

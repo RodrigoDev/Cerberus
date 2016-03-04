@@ -1,12 +1,11 @@
 <?php
-declare(strict_types=1);
+
+declare (strict_types = 1);
 
 namespace Cerberus\Entities;
 
-
 class Role
 {
-
     protected $name;
     protected $permissions;
 
@@ -26,11 +25,13 @@ class Role
 
     /**
      * @param string $name
+     *
      * @return Role
      */
     public function setName(string $name): Role
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -44,14 +45,13 @@ class Role
 
     /**
      * @param Permission $permission
+     *
      * @return Role
      */
     public function addPermission(Permission $permission): Role
     {
         $this->permissions[] = $permission;
+
         return $this;
     }
-
-
-
 }

@@ -1,7 +1,5 @@
 <?php
 
-namespace Cerberus\Acl\Contracts\Tests;
-
 use Cerberus\Acl;
 
 class TestAcl extends \PHPUnit_Framework_TestCase
@@ -17,8 +15,7 @@ class TestAcl extends \PHPUnit_Framework_TestCase
         $acl->method('hasRole')
              ->willReturn(true);
 
-        // Chamando $esboco->fazAlgumaCoisa() agora vai retornar
-        // 'foo'.
-        $this->assertEquals(true, $acl->hasRole('teste'));
+        // Chamando $esboco->fazAlgumaCoisa() agora vai retornar true
+        $this->assertEquals(true, $acl->hasRole('teste'), 'Asserts that hasRole returns true');
     }
 }
