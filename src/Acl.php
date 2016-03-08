@@ -10,31 +10,9 @@ use Cerberus\Entities\Role;
 
 class Acl
 {
-    protected $roles;
-    protected $resources;
+    protected $roles = [];
+    protected $resources = [];
     protected $user;
-
-    /**
-     * Acl constructor.
-     *
-     * @param array $roles
-     */
-    public function __construct(array $roles, array $resources)
-    {
-        foreach ($roles as $role) {
-            if (!$role instanceof Role) {
-                throw new \InvalidArgumentException('Invalid Role');
-            }
-        }
-        $this->roles = $roles;
-
-        foreach ($resources as $resource) {
-            if (!$resource instanceof Resource) {
-                throw new \InvalidArgumentException('Invalid Resource');
-            }
-        }
-        $this->resources = $resources;
-    }
 
     /**
      * @param UserAcl $user
@@ -45,6 +23,32 @@ class Acl
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function addRole(string $name)
+    {
+        $role = new Role($name);
+        $this->roles[$name] = $role;
+        return $this;
+    }
+
+    public function removeRole(Role $role)
+    {
+        unset($this->roles[$role->getRoleId]);
+        return $this;
+    }
+
+    public function addResource(string $name)
+    {
+        $role = new Resource($name);
+        $this->resource[$name] = $resource;
+        return $this;
+    }
+
+    public function removeResource(Role $resource)
+    {
+        unset($this->roles[$resource->getResourceId]);
         return $this;
     }
 
@@ -62,6 +66,18 @@ class Acl
         }
 
         return false;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return Cerberus\Entities\Role
+     */
+    public function getRole(string $role): Role
+    {
+        if ($this->roles[$role]) {
+            return $this->roles[$role];
+        }
     }
 
     /**

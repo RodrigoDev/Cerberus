@@ -24,6 +24,14 @@ class Role
     }
 
     /**
+     * @return string
+     */
+    public function getRoleId(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param string $name
      *
      * @return Role
