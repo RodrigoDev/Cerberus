@@ -5,8 +5,8 @@ declare (strict_types = 1);
 namespace Cerberus;
 
 use Cerberus\Contracts\UserAcl;
-use Cerberus\Entities\Resource;
-use Cerberus\Entities\Role;
+use Cerberus\Resource;
+use Cerberus\Role;
 
 class Acl
 {
@@ -26,41 +26,55 @@ class Acl
         return $this;
     }
 
-    public function addRole(string $name)
+    public function addRole(string $role)
     {
-        $role = new Role($name);
-        $this->roles[$name] = $role;
+        if (is_string($role)) {
+            $role = new Role($role);
+        } elseif (!$role instanceof Role) {
+            throw new Exception\InvalidArgumentException(
+                'addRole() expects $role to be of type Cerberus\Role'
+            );
+        }
+
+        $this->roles[(string) $role] = $role;
         return $this;
     }
 
-    public function removeRole(Role $role)
+    public function removeRole($role)
     {
-        unset($this->roles[$role->getRoleId]);
+        unset($this->roles[(string) $role]);
         return $this;
     }
 
-    public function addResource(string $name)
+    public function addResource(string $resource)
     {
-        $role = new Resource($name);
-        $this->resource[$name] = $resource;
+        if (is_string($resource)) {
+            $resource = new Resource($resource);
+        } elseif (!$resource instanceof Role) {
+            throw new Exception\InvalidArgumentException(
+                'addResource() expects $resource to be of type Cerberus\Resource'
+            );
+        }
+
+        $this->roles[(string) $role] = $role;
         return $this;
     }
 
-    public function removeResource(Role $resource)
+    public function removeResource($resource)
     {
-        unset($this->roles[$resource->getResourceId]);
+        unset($this->roles[(string) $resource]);
         return $this;
     }
 
     /**
-     * @param string $role
+     * @param  $role
      *
      * @return bool
      */
-    public function hasRole(string $role): bool
+    public function hasRole($role): bool
     {
         foreach ($this->roles as $r) {
-            if ($r->getName() == $role) {
+            if ($r->getName() == (string) $role) {
                 return true;
             }
         }
@@ -69,29 +83,29 @@ class Acl
     }
 
     /**
-     * @param string $role
+     * @param  $role
      *
      * @return Cerberus\Entities\Role
      */
-    public function getRole(string $role): Role
+    public function getRole($role): Role
     {
-        if ($this->roles[$role]) {
-            return $this->roles[$role];
+        if ($this->roles[(string) $role]) {
+            return $this->roles[(string) $role];
         }
     }
 
     /**
-     * @param string $role
-     * @param string $permission
+     * @param $role
+     * @param $operation
      *
      * @return bool
      */
-    public function hasPermission(string $role, string $permission): bool
+    public function hasOperation($role, $operation): bool
     {
         foreach ($this->roles as $r) {
-            if ($r->getName() == $role) {
-                foreach ($r->getPermissions() as $p) {
-                    if ($p->getName() == $permission) {
+            if ($r->getName() == (string) $role) {
+                foreach ($r->getOperations() as $p) {
+                    if ($p->getName() == (string) $operation) {
                         return true;
                     }
                 }
@@ -102,33 +116,33 @@ class Acl
     }
 
     /**
-     * @param string       $permission
+     * @param        $operation
      * @param UserAcl|null $user
      *
      * @return bool
      */
-    public function can(string $permission, UserAcl $user = null): bool
+    public function can($operation, UserAcl $user = null): bool
     {
         if ($user) {
-            return $this->hasPermission($user->getRole(), $permission);
+            return $this->hasOperation($user->getRole(), $operation);
         }
 
         if ($this->user) {
-            return $this->hasPermission($this->user->getRole(), $permission);
+            return $this->hasOperation($this->user->getRole(), $operation);
         }
 
         return false;
     }
 
     /**
-     * @param string       $permission
+     * @param string       $operation
      * @param UserAcl|null $user
      *
      * @return bool
      */
-    public function cannot(string $permission, UserAcl $user = null): bool
+    public function cannot(string $operation, UserAcl $user = null): bool
     {
-        return !$this->can($permission, $user);
+        return !$this->can($operation, $user);
     }
 
     /**
@@ -146,10 +160,10 @@ class Acl
         foreach ($this->resources as $r) {
             if (is_a($resource, $r->getName())) {
                 if ($user) {
-                    return $resource->{$r->getOwnerField()}() == $user->getId();
+                    return $resource->{$r->getOwnerId()}() == $user->getId();
                 }
 
-                return $resource->{$r->getOwnerField()}() == $this->user->getId();
+                return $resource->{$r->getOwnerId()}() == $this->user->getId();
             }
         }
 

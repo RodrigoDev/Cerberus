@@ -2,15 +2,15 @@
 
 declare (strict_types = 1);
 
-namespace Cerberus\Entities;
+namespace Cerberus;
 
-class Permission
+class Operation
 {
     protected $name;
 
     public function __construct(string $name = null)
     {
-        $this->name = $name;
+        $this->name = (string) $name;
     }
 
     /**
@@ -24,12 +24,22 @@ class Permission
     /**
      * @param string $name
      *
-     * @return Permission
+     * @return Operation
      */
-    public function setName(string $name): Permission
+    public function setName(string $name): Operation
     {
         $this->name = $name;
-
         return $this;
+    }
+
+    /**
+     * Returns the Operation identifier
+     * Proxies to getName()
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

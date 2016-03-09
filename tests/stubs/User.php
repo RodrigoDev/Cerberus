@@ -2,7 +2,8 @@
 
 declare (strict_types = 1);
 
-namespace Cerberus\Entities;
+namespace Cerberus\Entities\Tests\Stubs;
+
 use Cerberus\Contracts\UserAcl;
 
 class User implements UserAcl
