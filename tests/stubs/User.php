@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-namespace Cerberus\Entities\Tests\Stubs;
+namespace Cerberus\Tests\Stubs;
 
 use Cerberus\Contracts\UserAcl;
 

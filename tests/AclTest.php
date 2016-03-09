@@ -1,7 +1,7 @@
 <?php
 
 use Cerberus\Acl;
-use Cerberus\Stubs\User;
+use Cerberus\Tests\Stubs\User;
 use Cerberus\Resource;
 use Cerberus\Role;
 
