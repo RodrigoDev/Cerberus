@@ -7,6 +7,7 @@ namespace Cerberus;
 use Cerberus\Contracts\UserAcl;
 use Cerberus\Resource;
 use Cerberus\Role;
+use Cerberus\Exceptions\RoleNotFoundException;
 
 class Acl
 {
@@ -42,7 +43,13 @@ class Acl
 
     public function removeRole($role)
     {
-        unset($this->roles[(string) $role]);
+        $role = (string) $role;
+        if(isset($this->roles[$role])){
+            unset($this->roles[$role]);
+        } else {
+            throw new RoleNotFoundException();
+        }
+
         return $this;
     }
 
@@ -51,7 +58,7 @@ class Acl
         if (is_string($resource)) {
             $resource = new Resource($resource);
         } elseif (!$resource instanceof Role) {
-            throw new Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'addResource() expects $resource to be of type Cerberus\Resource'
             );
         }

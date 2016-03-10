@@ -45,7 +45,31 @@ class TestAcl extends \PHPUnit_Framework_TestCase
     {
         $role = $this->_acl->addRole('area')
                            ->getRole('area');
-        $this->assertInstanceOf('Cerberus\Role', $role);
+        $this->assertInstanceOf(Role::class, $role);
         $this->assertEquals('area', $role->getName());
+    }
+
+    /**
+     * Ensures that basic removal of a single Role works
+     *
+     * @return void
+     */
+    public function testRoleRegistryRemoveOne()
+    {
+        $roleGuest = new Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->removeRole($roleGuest);
+        $this->assertFalse($this->_acl->hasRole($roleGuest));
+    }
+
+    /**
+     * Ensures that an exception is thrown when a non-existent Role is specified for removal
+     *
+     * @return void
+     */
+    public function testRoleRegistryRemoveOneNonExistent()
+    {
+        $this->setExpectedException(Cerberus\Exceptions\RoleNotFoundException::class, 'role not found');
+        $this->_acl->removeRole('nonexistent');
     }
 }

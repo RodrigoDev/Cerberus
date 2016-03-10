@@ -16,7 +16,7 @@ class CerberusServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['cerberus'] = $app->share(function ($app) {
-            return new Cerberus(array(), array());
+            return new Cerberus();
         });
     }
 
