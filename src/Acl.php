@@ -5,8 +5,6 @@ declare (strict_types = 1);
 namespace Cerberus;
 
 use Cerberus\Contracts\UserAcl;
-use Cerberus\Resource;
-use Cerberus\Role;
 use Cerberus\Exceptions\RoleNotFoundException;
 
 class Acl
@@ -27,7 +25,7 @@ class Acl
         return $this;
     }
 
-    public function addRole(string $role)
+    public function addRole(string $role): Acl
     {
         if (is_string($role)) {
             $role = new Role($role);
@@ -41,7 +39,7 @@ class Acl
         return $this;
     }
 
-    public function removeRole($role)
+    public function removeRole($role): Acl
     {
         $role = (string) $role;
         if(isset($this->roles[$role])){
@@ -53,7 +51,7 @@ class Acl
         return $this;
     }
 
-    public function addResource(string $resource)
+    public function addResource(string $resource): Acl
     {
         if (is_string($resource)) {
             $resource = new Resource($resource);
@@ -63,11 +61,11 @@ class Acl
             );
         }
 
-        $this->roles[(string) $role] = $role;
+        $this->resources[(string) $resource] = $resource;
         return $this;
     }
 
-    public function removeResource($resource)
+    public function removeResource($resource): Acl
     {
         unset($this->roles[(string) $resource]);
         return $this;
@@ -92,7 +90,7 @@ class Acl
     /**
      * @param  $role
      *
-     * @return Cerberus\Entities\Role
+     * @return Role
      */
     public function getRole($role): Role
     {

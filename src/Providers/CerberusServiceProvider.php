@@ -4,26 +4,22 @@ declare (strict_types = 1);
 
 namespace Cerberus\Providers;
 
-use Cerberus\Acl as Cerberus;
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-
-class CerberusServiceProvider implements ServiceProviderInterface
+class CerberusServiceProvider implements Silex\ServiceProviderInterface
 {
     /**
      * @param Silex\Application $app
      */
-    public function register(Application $app)
+    public function register(Silex\Application $app)
     {
         $app['cerberus'] = $app->share(function ($app) {
-            return new Cerberus();
+            return new Cerberus\Acl();
         });
     }
 
     /**
      * @param Silex\Application $app
      */
-    public function boot(Application $app)
+    public function boot(Silex\Application $app)
     {
         //
     }
