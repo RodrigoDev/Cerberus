@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-namespace Cerberus\Tests\Stubs;
+namespace Tests\Stubs;
 
 use Cerberus\Contracts\UserAcl;
 
@@ -11,10 +11,14 @@ class User implements UserAcl
     protected $id;
     protected $role;
 
-    public function __construct(Role $role)
+    public function __construct()
+    {
+        $this->id = rand();
+    }
+
+    public function setRole(Role $role)
     {
         $this->role = $role;
-        $this->id   = rand();
     }
 
     public function getRole(): string

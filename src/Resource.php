@@ -11,7 +11,7 @@ class Resource
 
     public function __construct(string $name = null, string $ownerId = null)
     {
-        $this->name = (string) $name;
+        $this->name = $name;
         $this->ownerId = $ownerId;
     }
 

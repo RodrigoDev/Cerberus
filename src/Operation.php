@@ -10,7 +10,7 @@ class Operation
 
     public function __construct(string $name = null)
     {
-        $this->name = (string) $name;
+        $this->name = $name;
     }
 
     /**

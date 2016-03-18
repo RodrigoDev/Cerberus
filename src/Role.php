@@ -11,7 +11,7 @@ class Role
 
     public function __construct(string $name)
     {
-        $this->name = (string) $name;
+        $this->name = $name;
     }
 
     /**
@@ -51,7 +51,7 @@ class Role
     {
         if (is_string($operation)) {
            $operation = new Operation($operation);
-        } elseif (!$role instanceof Operation) {
+        } elseif (!$operation instanceof Operation) {
            throw new Exception\InvalidArgumentException(
                'addRole() expects $operation to be of type Cerberus\\Operation'
            );

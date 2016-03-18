@@ -1,9 +1,8 @@
 <?php
 
-use Cerberus\Acl;
-use Cerberus\Tests\Stubs\User;
-use Cerberus\Resource;
-use Cerberus\Role;
+use Cerberus\{Acl, Resource, Operation, Role};
+use Cerberus\Exceptions\{RoleNotFoundException};
+use Tests\Stubs\User;
 
 class TestAcl extends \PHPUnit_Framework_TestCase
 {
@@ -15,13 +14,22 @@ class TestAcl extends \PHPUnit_Framework_TestCase
      */
     protected $_acl;
     /**
-     * Instantiates a new ACL object and creates internal reference to it for each test method
+     * User stub object for test
+     *
+     * @var Tests\Stubs\User
+     */
+    protected $_user;
+    /**
+     * Instantiates a new ACL and User to use inside tests
      *
      * @return void
      */
     public function setUp()
     {
-        $this->_acl = new Cerberus\Acl();
+        $this->_acl = new Acl();
+        $this->_user = new User();
+
+        $this->_acl->setUser($this->_user);
     }
     /**
      * Ensures that basic addition and retrieval of a single Role works
@@ -40,13 +48,15 @@ class TestAcl extends \PHPUnit_Framework_TestCase
     }
     /**
      * Ensures that basic addition and retrieval of a single Resource works
+     *
+     * @return void
      */
     public function testRoleAddAndGetOneByString()
     {
         $role = $this->_acl->addRole('area')
                            ->getRole('area');
         $this->assertInstanceOf(Role::class, $role);
-        $this->assertEquals('area', $role->getName());
+        $this->assertEquals('area', $role);
     }
 
     /**
@@ -54,7 +64,7 @@ class TestAcl extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testRoleRegistryRemoveOne()
+    public function testRoleRemoveOne()
     {
         $roleGuest = new Role('guest');
         $this->_acl->addRole($roleGuest)
@@ -67,9 +77,37 @@ class TestAcl extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testRoleRegistryRemoveOneNonExistent()
+    public function testRoleRemoveOneNonExistent()
     {
-        $this->setExpectedException(Cerberus\Exceptions\RoleNotFoundException::class, 'role not found');
+        $this->expectException(RoleNotFoundException::class, 'role not found');
         $this->_acl->removeRole('nonexistent');
+    }
+    
+    /**
+     *  Ensures that a Operation can be inserted in a Role
+     * 
+     * @return void
+     */
+    public function testAddOperationInRole()
+    {
+        $role = new Role('admin');
+        $operation = new Operation('create.user');
+        
+        $role->addOperation($operation);
+        
+        $this->assertArrayHasKey($operation->getName(), $role->getOperations());
+    }
+
+    /**
+     *  Ensures that a Resource can be created and added to ACL
+     *
+     * @return void
+     */
+    public function testAddResourceInRole()
+    {
+        $resource = new Resource('book', $this->_user->getId());
+
+        $this->assertTrue($this->_acl->isOwner($resource));
+
     }
 }

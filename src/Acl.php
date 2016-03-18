@@ -25,7 +25,7 @@ class Acl
         return $this;
     }
 
-    public function addRole(string $role): Acl
+    public function addRole($role): Acl
     {
         if (is_string($role)) {
             $role = new Role($role);
@@ -51,11 +51,11 @@ class Acl
         return $this;
     }
 
-    public function addResource(string $resource): Acl
+    public function addResource($resource): Acl
     {
         if (is_string($resource)) {
-            $resource = new Resource($resource);
-        } elseif (!$resource instanceof Role) {
+            $resource = new Resource($resource, $this->user->getId());
+        } elseif (!$resource instanceof Resource) {
             throw new InvalidArgumentException(
                 'addResource() expects $resource to be of type Cerberus\Resource'
             );
@@ -162,16 +162,6 @@ class Acl
             $this->setUser($user);
         }
 
-        foreach ($this->resources as $r) {
-            if (is_a($resource, $r->getName())) {
-                if ($user) {
-                    return $resource->{$r->getOwnerId()}() == $user->getId();
-                }
-
-                return $resource->{$r->getOwnerId()}() == $this->user->getId();
-            }
-        }
-
-        return false;
+        return $resource->getOwnerId() == $this->user->getId();
     }
 }
